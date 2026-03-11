@@ -18,6 +18,9 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 # Make uv/uvx available system-wide
 ENV PATH="/root/.local/bin:${PATH}"
 
+# Install semgrep MCP
+RUN python3 -m pip install semgrep --quiet --no-input
+
 # Verify installations
 RUN node --version \
     && npm --version \

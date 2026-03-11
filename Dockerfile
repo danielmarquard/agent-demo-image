@@ -3,6 +3,7 @@ FROM rockylinux:9-minimal
 # Install Node.js (LTS) and Python 3
 # microdnf is the package manager in rockylinux:9-minimal
 RUN microdnf install -y \
+        tar \
         nodejs \
         npm \
         python3 \

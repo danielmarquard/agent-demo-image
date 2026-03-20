@@ -10,6 +10,7 @@ RUN microdnf install -y \
         python3-pip \
         curl \
         ca-certificates \
+        git \
     && microdnf clean all
 
 # Install uv (provides uvx)
@@ -20,6 +21,10 @@ ENV PATH="/root/.local/bin:${PATH}"
 
 # Install semgrep MCP
 RUN python3 -m pip install semgrep --quiet --no-input
+
+# Install pool binary
+COPY bin/pool-linux-amd64 /usr/local/bin/pool
+RUN chmod +x /usr/local/bin/pool
 
 # Verify installations
 RUN node --version \

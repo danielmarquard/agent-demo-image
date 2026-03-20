@@ -19,8 +19,11 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 # Make uv/uvx available system-wide
 ENV PATH="/root/.local/bin:${PATH}"
 
-# Install semgrep MCP
-RUN python3 -m pip install semgrep --quiet --no-input
+# Install semgrep-mcp (semgrep is pulled in automatically as a dependency)
+ENV VIRTUAL_ENV=/opt/semgrep-env
+RUN uv venv $VIRTUAL_ENV --python cpython-3.13 --seed && \
+    $VIRTUAL_ENV/bin/pip install "setuptools<79" "semgrep-mcp==0.8.1"
+ENV PATH="/opt/semgrep-env/bin:${PATH}"
 
 # Install pool binary
 COPY bin/pool-linux-amd64 /usr/local/bin/pool
@@ -31,4 +34,5 @@ RUN node --version \
     && npm --version \
     && npx --version \
     && python3 --version \
-    && uvx --version
+    && uvx --version \
+    && semgrep-mcp --help
